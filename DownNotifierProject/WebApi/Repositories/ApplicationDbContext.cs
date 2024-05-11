@@ -9,6 +9,6 @@ namespace DownNotifier.API.Repositories
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
-        public DbSet<TargetApp> TargetApps { get; set; }
+        public DbSet<TargetApp> TargetApp { get; set; }
     }
 }

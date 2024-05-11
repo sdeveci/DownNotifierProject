@@ -5,6 +5,6 @@ namespace DownNotifier.API.Services
 {
     public interface INotificationService
     {
-        Task SendNotification(TargetApp targetApp);
+        Task SendNotification(TargetApp pReq);
     }
 }

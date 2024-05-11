@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("b536e1b9-bc26-4a09-9a62-a71d1e8195c0")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("DownNotifier.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e2e0c02e3d0b1b0cea902c5900fa628afb70eac2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1fc090c91ffa27e9a093162964e32a439ca30462")]
 [assembly: System.Reflection.AssemblyProductAttribute("DownNotifier.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DownNotifier.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
