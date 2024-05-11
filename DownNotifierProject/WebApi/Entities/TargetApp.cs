@@ -13,7 +13,7 @@ namespace DownNotifier.API.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Url { get; set; }
-        public int MonitoringInterval { get; set; } // Min
+        public int MonitoringInterval { get; set; } 
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public NotificationType NotificationType { get; set; }

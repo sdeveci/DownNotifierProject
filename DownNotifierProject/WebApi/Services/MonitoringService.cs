@@ -19,21 +19,25 @@ namespace DownNotifier.API.Services
 
         public async Task MonitorTargetApplications()
         {
-            var targetAppList= await _targetAppRepository.GetAll();
-            foreach (var targetApp in targetAppList)
+            bool isRunning = true;
+            while (isRunning)
             {
-                await Policy
-                     .Handle<Exception>()
-                     .WaitAndRetryForever(retryAttempt => TimeSpan.FromSeconds(targetApp.MonitoringInterval))
-                     .Execute(async () =>
-                     {
-                         if (!IsUrlUp(targetApp))
+                var targetAppList = await _targetAppRepository.GetAll();
+                foreach (var targetApp in targetAppList)
+                {
+                    await Policy
+                         .Handle<Exception>()
+                         .WaitAndRetryForever(retryAttempt => TimeSpan.FromSeconds(targetApp.MonitoringInterval))
+                         .Execute(async () =>
                          {
-                             await _notificationService.SendNotification(targetApp);
-                         }
-                     });
+                             if (!IsUrlUp(targetApp))
+                             {
+                                 isRunning = false;
+                                 await _notificationService.SendNotification(targetApp);                                 
+                             }
+                         });
+                }
             }
-
             Thread.Sleep(60000); 
         }
 
@@ -41,15 +45,31 @@ namespace DownNotifier.API.Services
         {
             try
             {
-                WebRequest request = WebRequest.Create(pReq.Url);
+                var request = WebRequest.Create(pReq.Url);
+                if (request == null)
+                {
+                    return false;
+                }
                 request.Method = "HEAD";
-                using var response = request.GetResponse() as HttpWebResponse;
-                return response.StatusCode == HttpStatusCode.OK;
+
+                using (var response = request.GetResponse() as HttpWebResponse)
+                {
+                    if (response == null || response.StatusCode != HttpStatusCode.OK)
+                    {
+                        return false;
+                    }
+                }
+                return true;
             }
-            catch
+            catch (WebException ex)
+            {
+                return false;
+            }
+            catch (Exception ex)
             {
                 return false;
             }
         }
+
     }
 }
