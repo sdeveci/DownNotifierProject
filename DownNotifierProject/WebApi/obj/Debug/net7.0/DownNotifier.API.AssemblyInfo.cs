@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DownNotifier.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1fc090c91ffa27e9a093162964e32a439ca30462")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+74da7ac7d93b0c1e938f21a73e3fbc608b75af09")]
 [assembly: System.Reflection.AssemblyProductAttribute("DownNotifier.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DownNotifier.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
