@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DownNotifier.WebApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e2e0c02e3d0b1b0cea902c5900fa628afb70eac2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1fc090c91ffa27e9a093162964e32a439ca30462")]
 [assembly: System.Reflection.AssemblyProductAttribute("DownNotifier.WebApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DownNotifier.WebApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

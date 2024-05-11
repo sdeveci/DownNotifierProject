@@ -14,31 +14,31 @@ namespace DownNotifier.API.Services
             _configuration = configuration;
         }
 
-        public async Task SendNotification(TargetApp targetApp)
+        public async Task SendNotification(TargetApp pReq)
         {
-            switch (targetApp.NotificationType)
+            switch (pReq.NotificationType)
             {
                 case NotificationType.Email:
-                    await SendEmailNotification(targetApp);
+                    await SendEmailNotification(pReq);
                     break;
                 default:
-                    throw new NotImplementedException($"Notification type '{targetApp.NotificationType}' is not supported.");
+                    throw new NotImplementedException($"Notification type '{pReq.NotificationType}' is not supported.");
             }
         }
 
-        private async Task SendEmailNotification(TargetApp targetApp)
+        private async Task SendEmailNotification(TargetApp pReq)
         {
-            var smtpSettings = _configuration.GetSection("SmtpSettings");
-            string fromAddress = smtpSettings["Username"];
+            var _smtpSettings = _configuration.GetSection("SmtpSettings");
+            string fromAddress = _smtpSettings["Username"];
             string toAddress = "sadikdeveci@gmail.com";
-            string subject = $"[{targetApp.Name}] Application Down";
-            string body = $"The target application '{targetApp.Name}' is down. URL: {targetApp.Url}";
+            string subject = $"[{pReq.Name}] Application Down";
+            string body = $"The target application '{pReq.Name}' is down. URL: {pReq.Url}";
             
             using (var message = new MailMessage(fromAddress, toAddress, subject, body))
-            using (var client = new SmtpClient(smtpSettings["Server"]))
+            using (var client = new SmtpClient(_smtpSettings["Server"]))
             {
-                client.Port = Convert.ToInt32(smtpSettings["Port"]);
-                client.Credentials = new NetworkCredential(smtpSettings["Username"], smtpSettings["Password"]);
+                client.Port = Convert.ToInt32(_smtpSettings["Port"]);
+                client.Credentials = new NetworkCredential(_smtpSettings["Username"], _smtpSettings["Password"]);
                 client.EnableSsl = true;
                 client.Send(message);
             }
