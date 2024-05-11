@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "uLj0kSJJH8KGqlcDrA2MiVbS8WBSGrDF9xIKdAu2lSw=",
+  "Source": "DownNotifier.API",
+  "BasePath": "_content/DownNotifier.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
