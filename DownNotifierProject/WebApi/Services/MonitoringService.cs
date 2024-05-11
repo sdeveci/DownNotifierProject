@@ -19,6 +19,8 @@ namespace DownNotifier.API.Services
 
         public async Task MonitorTargetApplications()
         {
+            var targetAppList= await _targetAppRepository.GetAll();
+            foreach (var targetApp in targetAppList)
             bool isRunning = true;
             while (isRunning)
             {
@@ -41,10 +43,11 @@ namespace DownNotifier.API.Services
             Thread.Sleep(60000); 
         }
 
-        private bool IsUrlUp(TargetApp pReq)
+        private bool IsUrlUp(TargetApp targetApp)
         {
             try
             {
+                WebRequest request = WebRequest.Create(pReq.Url);
                 var request = WebRequest.Create(pReq.Url);
                 if (request == null)
                 {
