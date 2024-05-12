@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DownNotifier.API.Entities.TargetApp>
+
+<a asp-action="Create" class="btn btn-primary mb-3">Add New</a>
+<script>
+    function deleteTargetApp(id) {
+        if (confirm('Sure?')) {
+            fetch('/TargetApp/Delete/' + id, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        console.error('Error deleting target app');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    }
+</script>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>URL</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var app in Model)
+        {
+            <tr>
+                <td>@app.Id</td>
+                <td>@app.Name</td>
+                <td>@app.Url</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@app.Id" class="btn btn-primary btn-sm">Edit</a>
+                    <button class="btn btn-danger btn-sm" onclick="deleteTargetApp(@app.Id)">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

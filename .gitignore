@@ -3,3 +3,6 @@
 ################################################################################
 
 /DownNotifierProject/.vs
+/DownNotifierProject/WebApp/DownNotifier.WebApp.csproj.user
+/DownNotifierProject/WebApp/bin/Debug/net7.0
+/DownNotifierProject/WebApp/obj/Debug/net7.0
