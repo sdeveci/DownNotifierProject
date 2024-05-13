@@ -1,3 +1,6 @@
+using DownNotifier.API.Entities;
+using DownNotifier.API.Repositories;
+using DownNotifier.API.Services;
 using DownNotifier.WebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
