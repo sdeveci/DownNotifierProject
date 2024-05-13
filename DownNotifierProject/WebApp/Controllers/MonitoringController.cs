@@ -18,9 +18,9 @@ namespace DownNotifier.WebApp.Controllers
         }
 
         public async Task<IActionResult> HealthCheck()
-        {
-            await _apiService.Api.HealthCheck();
-            return View();
+        {   
+          await _apiService.Api.HealthCheck();
+          return View();
         }
     }
 }

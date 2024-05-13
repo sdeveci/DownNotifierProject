@@ -1,11 +1,14 @@
 ﻿using DownNotifier.API.Entities;
 using DownNotifier.API.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DownNotifier.API.Controllers
 {
+   
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class TargetAppController : ControllerBase
     {
         private readonly IRepository<TargetApp> _repository;

@@ -1,9 +1,15 @@
 ﻿using DownNotifier.API.Entities;
+using DownNotifier.API.Model;
 using Refit;
 namespace DownNotifier.WebApp.Services
 {
+
     public interface IDownNotifierAPIService
     {
+
+        [Post("/api/Auth")]
+        Task<LoginResponse> Login(ApplicationUser pReq);
+
         [Get("/api/TargetApp")]
         Task<IEnumerable<TargetApp>> GetAll();
 
