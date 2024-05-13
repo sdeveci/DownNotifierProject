@@ -1,10 +1,13 @@
 ﻿using DownNotifier.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DownNotifier.API.Controllers
 {
+    
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class MonitoringController : ControllerBase
     {
         private readonly IMonitoringService _monitoringService;
