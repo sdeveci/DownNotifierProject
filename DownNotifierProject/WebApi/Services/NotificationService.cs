@@ -2,6 +2,7 @@
 using DownNotifier.API.Enums;
 using System.Net.Mail;
 using System.Net;
+using Serilog;
 
 namespace DownNotifier.API.Services
 {
@@ -22,7 +23,8 @@ namespace DownNotifier.API.Services
                     await SendEmailNotification(pReq);
                     break;
                 default:
-                    throw new NotImplementedException($"Notification type '{pReq.NotificationType}' is not supported.");
+                    Log.Error($"Notification type '{pReq.NotificationType}' is not supported.");
+                    throw new NotImplementedException($"Notification type '{pReq.NotificationType}' is not supported.");                    
             }
         }
 
