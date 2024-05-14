@@ -23,7 +23,7 @@ namespace DownNotifier.WebApp.Services
         Task Delete(int id);
 
         [Post("/api/Monitoring/healthCheck")]
-        Task HealthCheck();
+        Task HealthCheck(TargetApp pReq);
 
     }
 }

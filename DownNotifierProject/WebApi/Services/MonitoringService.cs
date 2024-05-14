@@ -17,18 +17,20 @@ namespace DownNotifier.API.Services
             _notificationService = notificationService;
         }
 
-        public async Task MonitorTargetApplications()
+        public async Task MonitorTargetApplications(TargetApp pReq)
         {
          
             bool isRunning = true;
             while (isRunning)
             {
                 var targetAppList = await _targetAppRepository.GetAll();
-                foreach (var targetApp in targetAppList)
+                var targetAppUserList = targetAppList.Where(p => p.AplicationUserId == pReq.AplicationUserId).ToList();
+
+                foreach (var targetApp in targetAppUserList)
                 {
                     await Policy
                          .Handle<Exception>()
-                         .WaitAndRetryForever(retryAttempt => TimeSpan.FromSeconds(targetApp.MonitoringInterval))
+                         .WaitAndRetryForever(retryAttempt => TimeSpan.FromSeconds((double)targetApp.MonitoringInterval))
                          .Execute(async () =>
                          {
                              if (!IsUrlUp(targetApp))

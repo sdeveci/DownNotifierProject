@@ -1,7 +1,9 @@
-﻿namespace DownNotifier.API.Services
+﻿using DownNotifier.API.Entities;
+
+namespace DownNotifier.API.Services
 {
     public interface IMonitoringService
     {
-        Task MonitorTargetApplications();
+        Task MonitorTargetApplications(TargetApp pReq);
     }
 }
