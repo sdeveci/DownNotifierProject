@@ -5,8 +5,16 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-
+using Serilog;
+using Serilog.Events;
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File(new Serilog.Formatting.Json.JsonFormatter(), "Logs-DownNotifierAPI.json")
+    .CreateLogger();
 
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -40,7 +48,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder.ClearProviders();
+    loggingBuilder.AddSerilog();
+});
 
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
@@ -57,7 +69,7 @@ if(app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/error");
+    app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
