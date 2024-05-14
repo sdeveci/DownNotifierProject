@@ -3,6 +3,7 @@ using DownNotifier.API.Repositories;
 using Polly;
 using System.Net;
 using System;
+using System.Threading;
 
 namespace DownNotifier.API.Services
 {
@@ -17,7 +18,7 @@ namespace DownNotifier.API.Services
             _notificationService = notificationService;
         }
 
-        public async Task MonitorTargetApplications(TargetApp pReq)
+        public async Task MonitorTargetApplications(TargetApp pReq, CancellationToken cancellationToken)
         {
          
             bool isRunning = true;
@@ -36,12 +37,20 @@ namespace DownNotifier.API.Services
                              if (!IsUrlUp(targetApp))
                              {
                                  isRunning = false;
-                                 await _notificationService.SendNotification(targetApp);                                 
+                                 try
+                                 {
+                                     await _notificationService.SendNotification(targetApp);
+                                 }
+                                 catch (Exception ex)
+                                 {
+                                     //TODO:serilog will come (custom log)
+                                     throw;
+                                 }
                              }
                          });
                 }
             }
-            Thread.Sleep(60000); 
+            await Task.Delay(60000, cancellationToken);
         }
 
         private bool IsUrlUp(TargetApp pReq)
