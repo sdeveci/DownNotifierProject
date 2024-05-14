@@ -20,6 +20,7 @@ builder.Services.AddSession(options =>
 });
 
 builder.Services.AddTransient<DownNotifierAPIService>();
+builder.Services.AddSingleton<UserSessionService>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddLogging(loggingBuilder =>
