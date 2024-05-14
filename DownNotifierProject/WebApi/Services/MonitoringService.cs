@@ -4,6 +4,7 @@ using Polly;
 using System.Net;
 using System;
 using System.Threading;
+using Serilog;
 
 namespace DownNotifier.API.Services
 {
@@ -43,7 +44,7 @@ namespace DownNotifier.API.Services
                                  }
                                  catch (Exception ex)
                                  {
-                                     //TODO:serilog will come (custom log)
+                                     Log.Error($"Error sending notification for target app: '{targetApp.Name}'");
                                      throw;
                                  }
                              }
@@ -75,6 +76,8 @@ namespace DownNotifier.API.Services
             }
             catch (WebException ex)
             {
+               
+                Log.Error($"An error occurred in the http request URL for target app: '{pReq.Url}'");
                 return false;
             }
             catch (Exception ex)
