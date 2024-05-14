@@ -2,6 +2,7 @@
 using DownNotifier.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading;
 
 namespace DownNotifier.API.Controllers
 {
@@ -18,13 +19,13 @@ namespace DownNotifier.API.Controllers
         }
 
         [HttpPost("healthCheck")]
-        public async Task<IActionResult> HealthCheck(TargetApp pReq)
+        public async Task<IActionResult> HealthCheck(TargetApp pReq, CancellationToken cancellationToken)
         {
             if (pReq == null)
             {
                 return BadRequest();
             }
-            await _monitoringService.MonitorTargetApplications(pReq);
+            await _monitoringService.MonitorTargetApplications(pReq, cancellationToken);
             return Ok("Monitor Target Applications successfully.");
         }
 

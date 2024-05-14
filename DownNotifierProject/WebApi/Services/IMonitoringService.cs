@@ -4,6 +4,6 @@ namespace DownNotifier.API.Services
 {
     public interface IMonitoringService
     {
-        Task MonitorTargetApplications(TargetApp pReq);
+        Task MonitorTargetApplications(TargetApp pReq, CancellationToken cancellationToken);
     }
 }

@@ -33,15 +33,15 @@ namespace DownNotifier.API.Services
             string toAddress = "sadikdeveci@gmail.com";
             string subject = $"[{pReq.Name}] Application Down";
             string body = $"The target application '{pReq.Name}' is down. URL: {pReq.Url}";
-            
-            using (var message = new MailMessage(fromAddress, toAddress, subject, body))
-            using (var client = new SmtpClient(_smtpSettings["Server"]))
-            {
-                client.Port = Convert.ToInt32(_smtpSettings["Port"]);
-                client.Credentials = new NetworkCredential(_smtpSettings["Username"], _smtpSettings["Password"]);
-                client.EnableSsl = true;
-                client.Send(message);
-            }
+          
+                using (var message = new MailMessage(fromAddress, toAddress, subject, body))
+                using (var client = new SmtpClient(_smtpSettings["Server"]))
+                {
+                    client.Port = Convert.ToInt32(_smtpSettings["Port"]);
+                    client.Credentials = new NetworkCredential(_smtpSettings["Username"], _smtpSettings["Password"]);
+                    client.EnableSsl = true;
+                    await client.SendMailAsync(message);
+                }
         }
     }
 }
