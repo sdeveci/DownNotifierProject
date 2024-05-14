@@ -6,15 +6,21 @@ namespace DownNotifier.WebApp.Controllers
     public class TargetAppController : Controller
     {   
         private readonly DownNotifierAPIService _apiService;
-        public TargetAppController(DownNotifierAPIService apiService)
+        private readonly UserSessionService _userSessionService;
+        private readonly int _userId;
+
+        public TargetAppController(DownNotifierAPIService apiService, UserSessionService userSessionService)
         {
             _apiService = apiService;
+            _userSessionService = userSessionService;
+            _userId = int.Parse(_userSessionService.GetUserId());
         }
+
 
         public async Task<IActionResult> Index()
         {
             var targetAppList = await _apiService.Api.GetAll();
-            return View(targetAppList);
+            return View(targetAppList.ToList().Where(p=>p.AplicationUserId== _userId));
         }
 
         public IActionResult Create()
@@ -27,9 +33,10 @@ namespace DownNotifier.WebApp.Controllers
         {
             if (pReq == null)
             {
-                return BadRequest();
+                ModelState.AddModelError(string.Empty, "required field");
+                return View("~/Views/Shared/Error.cshtml");
             }
-
+            pReq.AplicationUserId = _userId;
             await _apiService.Api.Insert(pReq);
             return RedirectToAction(nameof(Index));
         }
@@ -37,10 +44,11 @@ namespace DownNotifier.WebApp.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var targetAppList = await _apiService.Api.GetAll();
-            var targetApp = targetAppList.Where(p => p.Id == id).FirstOrDefault();
+            var targetApp = targetAppList.Where(p => p.Id == id && p.AplicationUserId== _userId).FirstOrDefault();
             if (targetApp == null)
-            {
-                return NotFound();
+            {                
+                ModelState.AddModelError(string.Empty, "Not found!");
+                return View("~/Views/Shared/Error.cshtml");
             }
 
             return View(targetApp);
@@ -51,9 +59,10 @@ namespace DownNotifier.WebApp.Controllers
         {
             if (id != pReq.Id)
             {
-                return BadRequest();
+                ModelState.AddModelError(string.Empty, "required field");
+                return View("~/Views/Shared/Error.cshtml");
             }
-
+            pReq.AplicationUserId = _userId;
             await _apiService.Api.Update(id, pReq);
             return RedirectToAction(nameof(Index));
         }
