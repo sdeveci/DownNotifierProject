@@ -5,11 +5,8 @@ using System.Text.Json.Serialization;
 
 namespace DownNotifier.API.Entities
 {
-    public class TargetApp
+    public class TargetApp :BaseEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Url { get; set; }
         public int MonitoringInterval { get; set; } 

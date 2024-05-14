@@ -5,7 +5,7 @@ namespace DownNotifier.WebApp.Controllers
 {
     public class TargetAppController : Controller
     {   
-      private readonly DownNotifierAPIService _apiService;
+        private readonly DownNotifierAPIService _apiService;
         public TargetAppController(DownNotifierAPIService apiService)
         {
             _apiService = apiService;

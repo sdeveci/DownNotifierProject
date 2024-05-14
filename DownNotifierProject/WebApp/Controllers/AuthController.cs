@@ -2,7 +2,9 @@
 using DownNotifier.WebApp.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace DownNotifier.WebApp.Controllers
 {
@@ -10,11 +12,13 @@ namespace DownNotifier.WebApp.Controllers
     {
         private readonly DownNotifierAPIService _apiService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly UserSessionService _userSessionService;
 
-        public AuthController(DownNotifierAPIService apiService, IHttpContextAccessor httpContextAccessor)
+        public AuthController(DownNotifierAPIService apiService, IHttpContextAccessor httpContextAccessor, UserSessionService userSessionService)
         {
             _apiService = apiService;
             _httpContextAccessor = httpContextAccessor;
+            _userSessionService = userSessionService;
         }
         public IActionResult Index()
         {
@@ -29,12 +33,15 @@ namespace DownNotifier.WebApp.Controllers
                 var response = await _apiService.Api.Login(pReq);
                 if (!string.IsNullOrEmpty(response.Token))
                 {
-                    HttpContext.Session.SetString("JwtToken", response.Token);
+                    _userSessionService.SetJwtToken(response.Token);
+                    
+                    var username = _userSessionService.GetUsername();
+                    
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid username or password.");
+                    ModelState.AddModelError(string.Empty, response.Message);
                     return View("~/Views/Shared/Error.cshtml");
                 }
             }
@@ -44,10 +51,11 @@ namespace DownNotifier.WebApp.Controllers
                 return View("~/Views/Shared/Error.cshtml");
             }
         }
-        [HttpPost]
         public async Task<IActionResult> Logout()
         {
             _httpContextAccessor.HttpContext?.Session.Remove("JwtToken");
+            _httpContextAccessor.HttpContext?.Session.Remove("Username");
+            _httpContextAccessor.HttpContext?.Session.Remove("UserId");
             return RedirectToAction("Index", "Auth");
         }
 

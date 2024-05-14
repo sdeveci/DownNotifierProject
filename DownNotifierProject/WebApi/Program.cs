@@ -17,6 +17,8 @@ builder.Configuration
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("SQLiteConnection")));
 builder.Services.AddScoped<IRepository<TargetApp>,Repository<TargetApp>>();
+builder.Services.AddScoped<IRepository<ApplicationUser>, Repository<ApplicationUser>>();
+
 builder.Services.AddScoped<IMonitoringService,MonitoringService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddEndpointsApiExplorer();

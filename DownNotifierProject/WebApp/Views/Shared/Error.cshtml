@@ -1,10 +1,36 @@
-﻿<!DOCTYPE html>
+﻿@{
+    ViewData["Title"] = "Error";
+    Layout = null;
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <title>Error</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-align: center;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+        }
+
+        .form-error {
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: auto;
+        }
+    </style>
 </head>
 <body>
-    <h1>Error</h1>
-    <p>@Html.ValidationSummary(false, "", new { @class = "text-danger" })</p>
+    <div class="form-error">
+        <h1 class="text-danger">Error</h1>
+        <p class="text-danger">@Html.ValidationSummary(false, "", new { @class = "text-danger" })</p>
+    </div>
 </body>
 </html>
